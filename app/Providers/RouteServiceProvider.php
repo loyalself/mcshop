@@ -46,7 +46,7 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapWebRoutes();
 
-        //注册路由 wx.php
+        //注册路由文件 wx.php
         $this->mapWxRoutes();
     }
 
@@ -79,11 +79,11 @@ class RouteServiceProvider extends ServiceProvider
             ->group(base_path('routes/api.php'));
     }
 
-    //注册路由 wx.php
+    //注册路由文件 wx.php
     protected function mapWxRoutes(){
-        Route::prefix('wx')
+        Route::prefix('wx') //路由前缀
             //->middleware('api')
-            ->namespace($this->namespace.'\Wx')
+            ->namespace($this->namespace.'\Wx') //该路由下的文件所在空间
             ->group(base_path('routes/wx.php'));
     }
 }
