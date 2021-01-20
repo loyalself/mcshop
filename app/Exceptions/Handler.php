@@ -13,7 +13,7 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontReport = [
-        //
+        BusinessException::class  //添加自定义业务异常
     ];
 
     /**
@@ -48,8 +48,14 @@ class Handler extends ExceptionHandler
      *
      * @throws \Throwable
      */
-    public function render($request, Throwable $exception)
-    {
+    public function render($request, Throwable $exception){
+        //如果异常是我们自定义的业务异常,throw出的异常会走到这里
+        if($exception instanceof BusinessException){
+            return response()->json([
+                'errno'  => $exception->getCode(),
+                'errmsg' => $exception->getMessage()
+            ]);
+        }
         return parent::render($request, $exception);
     }
 }

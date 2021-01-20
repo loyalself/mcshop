@@ -3,7 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="7da0b020-ab33-4908-862d-2a2fc1a8d459" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/CodeReponse.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/CodeReponse.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Exceptions/Handler.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Exceptions/Handler.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Wx/AuthController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Wx/AuthController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Services/UserServices.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Services/UserServices.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -135,6 +138,7 @@
     <property name="credentialsType com.jetbrains.php.remote.interpreter.ui.PhpCreateRemoteSdkForm" value="SSH Configuration" />
     <property name="credentialsType com.jetbrains.php.remote.interpreter.ui.PhpInplaceEditRemoteSdkForm" value="SSH Configuration" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="php.override.implement.member.chooser.php.doc" value="NONE" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
@@ -172,7 +176,11 @@
       <updated>1610698776047</updated>
       <workItem from="1610698777192" duration="5145000" />
       <workItem from="1610970167224" duration="312000" />
-      <workItem from="1611042123119" duration="3917000" />
+      <workItem from="1611042123119" duration="5369000" />
+      <workItem from="1611106923008" duration="184000" />
+      <workItem from="1611121644667" duration="21000" />
+      <workItem from="1611121817846" duration="10000" />
+      <workItem from="1611140841224" duration="1846000" />
     </task>
     <servers />
   </component>
