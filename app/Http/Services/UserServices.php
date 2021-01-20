@@ -51,6 +51,10 @@ class UserServices extends BaseServices
      * @throws BusinessException
      */
     public function checkCaptcha(string $mobile,string $code){
+        //如果不是生产环境,直接跳过验证码验证
+        if(!app()->environment('production')){
+            return true;
+        }
         $key = 'register_captcha_'.$mobile;
         $isPass = $code === Cache::get($key);
         if($isPass){

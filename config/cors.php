@@ -3,6 +3,7 @@
 return [
 
     /*
+     * 跨域资源共享（CORS）配置
     |--------------------------------------------------------------------------
     | Cross-Origin Resource Sharing (CORS) Configuration
     |--------------------------------------------------------------------------
@@ -15,7 +16,8 @@ return [
     |
     */
 
-    'paths' => ['api/*'],
+    //'paths' => ['api/*'], //default value
+    'paths' => ['wx/*'],
 
     'allowed_methods' => ['*'],
 
@@ -27,7 +29,8 @@ return [
 
     'exposed_headers' => [],
 
-    'max_age' => 0,
+    //'max_age' => 0, //default value
+    'max_age' => 1800,
 
     'supports_credentials' => false,
 

@@ -3,10 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="7da0b020-ab33-4908-862d-2a2fc1a8d459" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/CodeReponse.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/CodeReponse.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Exceptions/Handler.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Exceptions/Handler.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Wx/AuthController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Wx/AuthController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Services/UserServices.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Services/UserServices.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/cors.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/cors.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -180,7 +178,7 @@
       <workItem from="1611106923008" duration="184000" />
       <workItem from="1611121644667" duration="21000" />
       <workItem from="1611121817846" duration="10000" />
-      <workItem from="1611140841224" duration="1846000" />
+      <workItem from="1611140841224" duration="2581000" />
     </task>
     <servers />
   </component>
