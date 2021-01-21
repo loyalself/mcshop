@@ -18,9 +18,9 @@ class User extends Authenticatable implements JWTSubject
 
     ];
 
-
+    //隐藏模型查询返回字段
     protected $hidden = [
-
+        'password'
     ];
 
 
