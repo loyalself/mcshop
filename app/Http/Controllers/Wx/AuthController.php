@@ -8,11 +8,40 @@ use App\Http\Services\UserServices;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 class AuthController extends WxController
 {
+    public function login(Request $request){
+        $username = $request->input('username');
+        $password = $request->input('password');
+        if(empty($username) || empty($password)) return $this->fail(CodeReponse::PARAM_ILLEGAL);
+
+        $user = UserServices::getInstance()->getByUsername($username);
+        if(is_null($user)) return $this->fail(CodeReponse::AUTH_INVALID_ACCOUNT);
+
+        //getAuthPassword()是 Authenticatable 里的方法
+        $isPass = Hash::check($password,$user->getAuthPassword());
+        if(!$isPass) return $this->fail(CodeReponse::AUTH_INVALID_ACCOUNT,'账号密码不对');
+        //更新登录信息
+        $user->last_login_time = now()->toDateTimeString();
+        $user->last_login_ip = $request->getClientIp();
+        if(!$user->save()) return $this->fail(CodeReponse::UPDATED_FAIL);
+        //从jwt中获取token
+        $token = Auth::guard('wx')->login($user);
+        //返回登录数据
+        return $this->success([
+            'token'    => $token,
+            'userInfo' => [
+                'nickName'  => $username,
+                'avatarUrl' => $user->avatar
+            ]
+        ]);
+
+    }
+
     /**
      * 注册
      * @param Request $request
@@ -25,7 +54,7 @@ class AuthController extends WxController
         $mobile   = $request->input('mobile');
         $code     = $request->input('code');
 
-        if(empty($username) || empty($password) || empty($password) || empty($code)){
+        if(empty($username) || empty($password) || empty($mobile) || empty($code)){
             //return ['errno'=>401,'errmsg'=>'参数不对'];
             return $this->fail(CodeReponse::PARAM_ILLEGAL);
         }

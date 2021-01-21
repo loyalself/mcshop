@@ -14,7 +14,8 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'web',
+        //'guard' => 'web', //default value
+        'guard' => 'wx',
         'passwords' => 'users',
     ],
 
@@ -46,6 +47,11 @@ return [
             'provider' => 'users',
             'hash' => false,
         ],
+
+        'wx' => [
+            'driver'   => 'jwt',
+            'provider' => 'users',
+        ]
     ],
 
     /*
@@ -68,7 +74,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\User::class,
+            'model' => App\Models\User::class,
         ],
 
         // 'users' => [
