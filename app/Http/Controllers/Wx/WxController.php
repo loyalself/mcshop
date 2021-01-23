@@ -6,6 +6,8 @@ namespace App\Http\Controllers\Wx;
 
 use App\CodeReponse;
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class WxController extends Controller
 {
@@ -13,6 +15,9 @@ class WxController extends Controller
 
     protected $except;
 
+    /**
+     * 添加中间件限制以及白名单和黑名单设置
+     */
     public function __construct(){
        $option = [];
        if(!is_null($this->only)){
@@ -51,11 +56,26 @@ class WxController extends Controller
         return $this->codeReturn($errno,$errmsg);
     }*/
 
-  /*  protected function fail(array $codeResponse){
+    /*protected function fail(array $codeResponse){
         return $this->codeReturn($codeResponse);
     }*/
 
     protected function fail(array $codeResponse = CodeReponse::FAIL,$info = ''){
         return $this->codeReturn($codeResponse,null,$info);
+    }
+
+    protected function failOrSuccess($isSuccess,array $codeResponse = CodeReponse::FAIL,$data = null,$info = ''){
+        if($isSuccess){
+            return $this->success($data);
+        }else{
+            return $this->fail($codeResponse,$info);
+        }
+    }
+
+    /**
+     * @return User|null
+     */
+    public function user(){
+        return Auth::guard('wx')->user();
     }
 }

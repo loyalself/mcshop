@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers\Wx;
-
 use App\CodeReponse;
 use App\Exceptions\BusinessException;
 use App\Http\Services\UserServices;
@@ -11,27 +9,97 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
 class AuthController extends WxController
 {
    /* public function __construct(){
         $this->middleware('auth:wx',[
-            'only' => ['user'],  //白名单,这里面的方法不用验证
+            'only' => ['info'],  //白名单,这里面的方法不用验证
             //'except' => [] //黑名单
         ]);
     }*/
 
-    protected $only = ['user'];
+    protected $only = ['info'];
 
     /**
-     * 获取用户信息
+     * 获取用户基础信息
      * @return \Illuminate\Http\JsonResponse
      */
-    public function user(){
-        $user = Auth::guard('wx')->user();
-        return $this->success($user);
+    public function info(){
+        //$user = Auth::guard('wx')->user();
+        $user = $this->user();
+        return $this->success([
+            'nickname' => $user->nickname,
+            'avatar'   => $user->avatar,
+            'gender'   => $user->gender,
+            'mobile'   => $user->mobile
+        ]);
     }
 
+    /**
+     * 用户信息修改
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function profile(Request $request){
+        $user = $this->user();
+        $avatar = $user->avatar;
+        $gender = $user->gender;
+        $nickname = $user->nickname;
+
+        if(!empty($avatar)){
+            $user->avatar = $avatar;
+        }
+
+        if(!empty($avatar)){
+            $user->gender = $gender;
+        }
+
+        if(!empty($nickname)){
+            $user->nickname = $nickname;
+        }
+        $res = $user->save();
+        return $this->failOrSuccess($res,CodeReponse::UPDATED_FAIL);
+    }
+
+    /**
+     * 用户重置密码
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws BusinessException
+     */
+    public function reset(Request $request){
+        $code = $request->input('code');
+        $password = $request->input('password');
+        $mobile = $request->input('mobile');
+        if(empty($code) || empty($password || empty($mobile))){
+            return $this->fail(CodeReponse::PARAM_ILLEGAL);
+        }
+        $isPass = UserServices::getInstance()->checkCaptcha($mobile,$code);
+        if(!$isPass) return $this->fail(CodeReponse::AUTH_CAPTCHA_UNMATCH);
+
+        $user = UserServices::getInstance()->getByMobile($mobile);
+        if(is_null($user)) return $this->fail(CodeReponse::AUTH_MOBILE_UNREGISTERED);
+
+        $user->password = Hash::make($password);
+        $res = $user->save();
+        //return $res ? $this->success() : $this->fail(CodeReponse::UPDATED_FAIL);
+        //优化 return
+        return $this->failOrSuccess($res,CodeReponse::UPDATED_FAIL);
+    }
+
+    /**
+     * 用户退出登录
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function logout(){
+        Auth::guard('wx')->logout();
+        return $this->success();
+    }
+    /**
+     * 用户登录
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function login(Request $request){
         $username = $request->input('username');
         $password = $request->input('password');
@@ -57,9 +125,7 @@ class AuthController extends WxController
                 'avatarUrl' => $user->avatar
             ]
         ]);
-
     }
-
     /**
      * 注册
      * @param Request $request

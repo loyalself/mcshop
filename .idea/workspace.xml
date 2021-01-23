@@ -6,8 +6,6 @@
       <change beforePath="$PROJECT_DIR$/app/CodeReponse.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/CodeReponse.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Wx/AuthController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Wx/AuthController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Wx/WxController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Wx/WxController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/Authenticate.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Middleware/Authenticate.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/User.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/wx.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/wx.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -187,7 +185,10 @@
       <workItem from="1611121817846" duration="10000" />
       <workItem from="1611140841224" duration="2718000" />
       <workItem from="1611212698101" duration="2020000" />
-      <workItem from="1611229145341" duration="2523000" />
+      <workItem from="1611229145341" duration="2671000" />
+      <workItem from="1611287252693" duration="1899000" />
+      <workItem from="1611296205259" duration="372000" />
+      <workItem from="1611368487607" duration="2262000" />
     </task>
     <servers />
   </component>
