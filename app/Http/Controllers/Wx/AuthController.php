@@ -194,18 +194,15 @@ class AuthController extends WxController
      */
     public function regCaptach(Request $request){
         $mobile = $request->input('mobile');
-        if(empty($mobile)) {
-            return $this->fail(CodeReponse::PARAM_ILLEGAL);
-        }
+        if(empty($mobile)) return $this->fail(CodeReponse::PARAM_ILLEGAL);
 
         //$user = (new UserServices())->getByMobile($mobile);
         $user = UserServices::getInstance()->getByMobile($mobile);
-        if(!is_null($user)) {
-            return $this->fail(CodeReponse::AUTH_MOBILE_REGISTERED);
-        }
+        if(!is_null($user))  return $this->fail(CodeReponse::AUTH_MOBILE_REGISTERED);
+
         //生成随机验证码
         $code = random_int(100000,999999);
-        //防刷验证码生成验证,一分钟内只能请求一次,一天10次;一分钟内已经添加过一次再添加就返回 false,即添加失败
+        //防刷验证码生成验证,一分钟内只能请求一次,一天10次;一分钟内已经添加过一次再添加(代表1分钟内请求多次发送短信的接口)就返回 false,即添加失败
         $lock = Cache::add('register_captach_lock_'.$mobile,1,60);
         if(!$lock) {
             //702:相同的返回码,但是返回信息不同,改造返回方法

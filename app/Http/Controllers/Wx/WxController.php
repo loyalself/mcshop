@@ -1,14 +1,11 @@
 <?php
-
-
 namespace App\Http\Controllers\Wx;
-
-
 use App\CodeReponse;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
-
 class WxController extends Controller
 {
     protected $only;
@@ -29,9 +26,8 @@ class WxController extends Controller
        $this->middleware('auth:wx',$option);
     }
 
-
     //protected function codeReturn($errno,$errmsg,$data = null){
-    protected function codeReturn(array $codeResponse,$data = null,$info = ''){ //优化
+    protected function codeReturn(array $codeResponse,$data = null,$info = ''){ //优化,添加 $info
        /* $res = [
             'errno' =>$errno,
             'errmsg'=>$errmsg
@@ -71,11 +67,57 @@ class WxController extends Controller
             return $this->fail($codeResponse,$info);
         }
     }
-
     /**
      * @return User|null
      */
     public function user(){
         return Auth::guard('wx')->user();
+    }
+
+    protected function successPaginate($page){
+        return $this->success($this->paginate($page));
+    }
+
+    /**
+     * 自定义分页器
+     * @param LengthAwarePaginator|array $page
+     * @return array
+     */
+    protected function paginate($page){
+        if($page instanceof LengthAwarePaginator){
+            return [
+                'total' => $page->total(),         //总数
+                'page'  => $page->currentPage(),   //当前页码
+                'limit' => $page->perPage(),      //一页显示几条
+                'pages' => $page->lastPage(),     //总共多少页
+                'list'  => $page->items()         //数据源
+            ];
+        }else if($page instanceof Collection){
+            $page = $page->toArray();
+        }
+
+        if(!is_array($page)) return $page;
+        $total = count($page);
+        return [
+            'total' => $total,
+            'page'  => 1,
+            'limit' => $total,
+            'pages' => 1,
+            'list'  => $page
+        ];
+    }
+    /**
+     * 判断用户是否登录
+     * @return bool
+     */
+    public function isLogin(){
+        return !is_null($this->user());
+    }
+    /**
+     * 获取用户id
+     * @return mixed
+     */
+    public function userId(){
+        return $this->user()->getAuthIdentifier(); //这个写法相当于  $this->user()->id;
     }
 }

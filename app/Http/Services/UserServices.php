@@ -64,4 +64,13 @@ class UserServices extends BaseServices
             throw new BusinessException(CodeReponse::AUTH_CAPTCHA_UNMATCH);
         }
     }
+    /**
+     * 批量获取用户信息
+     * @param array $userIds
+     * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Support\Collection
+     */
+    public function getUsers(array $userIds){
+        if(empty($userIds)) return collect([]);
+        return User::query()->whereIn('id',$userIds)->where('deleted',0)->get();
+    }
 }
