@@ -120,4 +120,6 @@ class WxController extends Controller
     public function userId(){
         return $this->user()->getAuthIdentifier(); //这个写法相当于  $this->user()->id;
     }
+
+
 }

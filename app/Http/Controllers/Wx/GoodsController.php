@@ -60,6 +60,7 @@ class GoodsController extends WxController
         $limit = $request->input('limit',10);
         $sort = $request->input('sort','add_time');
         $order = $request->input('order','desc');
+        //todo:验证参数(验证的同时获取参数值)
 
         if($this->isLogin() && !empty($keyword)){ //如果已登录或者搜索词不为空
             SearchHistoryServices::getInstance()->save($this->userId(),$keyword,Constant::SEARCH_HISTORY_FROM_WX);

@@ -3,11 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="7da0b020-ab33-4908-862d-2a2fc1a8d459" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Wx/AuthController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Wx/AuthController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Exceptions/Handler.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Exceptions/Handler.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Wx/GoodsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Wx/GoodsController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Wx/WxController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Wx/WxController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Services/BaseServices.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Services/BaseServices.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Services/UserServices.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Services/UserServices.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/wx.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/wx.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -197,7 +195,7 @@
       <workItem from="1611626738861" duration="630000" />
       <workItem from="1611628741881" duration="978000" />
       <workItem from="1611640206810" duration="2437000" />
-      <workItem from="1611642903476" duration="11214000" />
+      <workItem from="1611642903476" duration="12766000" />
     </task>
     <servers />
   </component>
