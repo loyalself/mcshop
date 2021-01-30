@@ -8,6 +8,7 @@ use App\Http\Services\CollectServices;
 use App\Http\Services\CommentServices;
 use App\Http\Services\GoodsServices;
 use App\Http\Services\SearchHistoryServices;
+use App\Inputs\GoodsListInput;
 use Illuminate\Http\Request;
 
 class GoodsController extends WxController
@@ -52,12 +53,20 @@ class GoodsController extends WxController
     }
 
     public function list(){
+        //6-13 优化函数参数过长 //3.
+       /* $input = new GoodsListInput();
+        $input = $input->fill();*/
+
+        //上面两行优化成一行
+        $input = GoodsListInput::new();
+
         //验证参数
        /*$input = $request->validate([
             'category_id' => 'required|integer'
         ]);*/
+        //2.
         //问题:当验证完后,要用 categpry_id 还需要再取一次,即  $categoryId = $input['category_id],这样很不方便,优化:
-        $categoryId = $this->verifyId('categoryId');
+        /*$categoryId = $this->verifyId('categoryId');
         $brandId = $this->verifyId('brandId');
         $keyword = $this->verifyString('keyword');
         $isNew = $this->verifyBoolean('isNew');
@@ -65,10 +74,10 @@ class GoodsController extends WxController
         $page = $this->verifyInteger('page',1);
         $limit = $this->verifyInteger('limit',10);
         $sort = $this->verifyEnum('sort','add_time',['add_time','retail_price','name']);
-        $order = $this->verifyEnum('order','desc',['desc','asc']);
+        $order = $this->verifyEnum('order','desc',['desc','asc']);*/
 
-
-       /* $categoryId = $request->input('categoryId');
+        //1.
+        /*$categoryId = $request->input('categoryId');
         $brandId = $request->input('brandId');
         $keyword = $request->input('keyword');
         $isNew = $request->input('isNew');
@@ -78,12 +87,15 @@ class GoodsController extends WxController
         $sort = $request->input('sort','add_time');
         $order = $request->input('order','desc');*/
 
-
         if($this->isLogin() && !empty($keyword)){ //如果已登录或者搜索词不为空
             SearchHistoryServices::getInstance()->save($this->userId(),$keyword,Constant::SEARCH_HISTORY_FROM_WX);
         }
-        $goodsList = GoodsServices::getInstance()->listGoods($categoryId,$brandId,$keyword,$isNew,$isHot,$page, $limit,$sort,$order);
-        $categoryList = GoodsServices::getInstance()->listL2Category($brandId,$isNew,$isHot,$keyword);
+        $columns = ['id','name','brief','pic_url','is_new','is_hot','counter_price','retail_price'];
+        //优化函数传递参数过长
+        //$goodsList = GoodsServices::getInstance()->listGoods($categoryId,$brandId,$keyword,$columns,$isNew,$isHot,$page, $limit,$sort,$order);
+        $goodsList = GoodsServices::getInstance()->listGoods($input,$columns);
+        //$categoryList = GoodsServices::getInstance()->listL2Category($brandId,$isNew,$isHot,$keyword);
+        $categoryList = GoodsServices::getInstance()->listL2Category($input);
         $goodsList = $this->paginate($goodsList);
         $goodsList['filterCategoryList'] = $categoryList;
         return $this->success($goodsList);
