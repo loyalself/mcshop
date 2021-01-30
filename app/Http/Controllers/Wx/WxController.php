@@ -1,13 +1,20 @@
 <?php
 namespace App\Http\Controllers\Wx;
 use App\CodeReponse;
+use App\Exceptions\BusinessException;
 use App\Http\Controllers\Controller;
+use App\Http\Traits\VerifyRequestInput;
 use App\Models\User;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
+
 class WxController extends Controller
 {
+    use VerifyRequestInput;
+
     protected $only;
 
     protected $except;
@@ -121,5 +128,62 @@ class WxController extends Controller
         return $this->user()->getAuthIdentifier(); //这个写法相当于  $this->user()->id;
     }
 
+  /*  public function verifyId($key,$default = null){
+        $value = $this->verifyData($key,$default,'integer|digits_between:1,20');
+        return $value;
+        $value = request()->input($key,$default);
+        //make方法参数:第一个是要验证的数据,第二个是规则
+        $validator = Validator::make(
+            [
+                $key => $value
+            ],
+            [
+                $key => 'integer|digits_between:1,20'
+            ]
+        );
+        if($validator->fails()) throw new BusinessException(CodeReponse::PARAM_ILLEGAL);
+    }
 
+    public function verifyString($key,$default = null){
+        $value = $this->verifyData($key,$default,'string');
+        $value = request()->input($key,$default);
+        $validator = Validator::make(
+            [
+                $key => $value
+            ],
+            [
+                $key => 'string'
+            ]
+        );
+        if($validator->fails()) throw new BusinessException(CodeReponse::PARAM_ILLEGAL);
+        return $value;
+    }
+
+
+    public function verifyBoolean($key,$default = null){
+        return $this->verifyData($key,$default,'boolean');
+    }
+
+    public function verifyInteger($key,$default = null){
+        return $this->verifyData($key,$default,'integer');
+    }
+
+    public function verifyEnum($key,$default = null,$enum = []){
+        return $this->verifyData($key,$default,Rule::in($enum));
+    }
+
+    public function verifyData($key,$default,$rule){
+        $value = request()->input($key,$default);
+        $validator = Validator::make(
+            [
+                $key => $value
+            ],
+            [
+                $key => $rule
+            ]
+        );
+        if(is_null($default) && is_null($value)) return $value;
+        if($validator->fails()) throw new BusinessException(CodeReponse::PARAM_ILLEGAL);
+        return $value;
+    }*/
 }

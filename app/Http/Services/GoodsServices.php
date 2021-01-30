@@ -103,10 +103,13 @@ class GoodsServices extends BaseServices
         if(!empty($brandId)){
             $query->where('brand_id',$brandId);
         }
-        if(!empty($isNew)){
+        //tips: 布尔值不应该用 empty 来判断,因为 empty(0) 代表空,即其实传递了值,但是没有走到if里的where查询
+        //if(!empty($isNew)){
+        if(!is_null($isNew)){
             $query->where('is_new',$isNew);
         }
-        if(!empty($isHot)){
+        //if(!empty($isHot)){
+        if(!is_null($isHot)){
             $query->where('is_hot',$isHot);
         }
         if(!empty($keyword)){

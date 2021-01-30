@@ -25,8 +25,9 @@ class GoodsController extends WxController
      * @return \Illuminate\Http\JsonResponse
      */
     public function category(Request $request){
-        $id = $request->input('id',0);
-        if(empty($id)) return $this->fail(CodeReponse::PARAM_ILLEGAL);
+        /*$id = $request->input('id',0);
+        if(empty($id)) return $this->fail(CodeReponse::PARAM_ILLEGAL);*/
+        $id = $this->verifyId('id');
 
         $cur = CatalogServices::getInstance()->getCategory($id);
         if(empty($cur)) return $this->fail(CodeReponse::PARAM_ILLEGAL);
@@ -50,8 +51,24 @@ class GoodsController extends WxController
         return  $this->success($data);
     }
 
-    public function list(Request $request){
-        $categoryId = $request->input('categoryId');
+    public function list(){
+        //验证参数
+       /*$input = $request->validate([
+            'category_id' => 'required|integer'
+        ]);*/
+        //问题:当验证完后,要用 categpry_id 还需要再取一次,即  $categoryId = $input['category_id],这样很不方便,优化:
+        $categoryId = $this->verifyId('categoryId');
+        $brandId = $this->verifyId('brandId');
+        $keyword = $this->verifyString('keyword');
+        $isNew = $this->verifyBoolean('isNew');
+        $isHot = $this->verifyBoolean('isHot');
+        $page = $this->verifyInteger('page',1);
+        $limit = $this->verifyInteger('limit',10);
+        $sort = $this->verifyEnum('sort','add_time',['add_time','retail_price','name']);
+        $order = $this->verifyEnum('order','desc',['desc','asc']);
+
+
+       /* $categoryId = $request->input('categoryId');
         $brandId = $request->input('brandId');
         $keyword = $request->input('keyword');
         $isNew = $request->input('isNew');
@@ -59,8 +76,8 @@ class GoodsController extends WxController
         $page = $request->input('page',1);
         $limit = $request->input('limit',10);
         $sort = $request->input('sort','add_time');
-        $order = $request->input('order','desc');
-        //todo:验证参数(验证的同时获取参数值)
+        $order = $request->input('order','desc');*/
+
 
         if($this->isLogin() && !empty($keyword)){ //如果已登录或者搜索词不为空
             SearchHistoryServices::getInstance()->save($this->userId(),$keyword,Constant::SEARCH_HISTORY_FROM_WX);
